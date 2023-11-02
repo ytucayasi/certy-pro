@@ -29,9 +29,9 @@ function obtenerCertificado(id, callback) {
 }
 
 function actualizarCertificado(id, certificado, callback) {
-  const { codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id } = certificado;
-  const query = 'UPDATE certificado SET codigo = ?, creditos = ?, horas = ?, lugar = ?, fecha_creacion = ?, nivel_academico_id = ?, documento_id = ?, estudiante_id = ? WHERE id = ?';
-  db.query(query, [codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id, id], callback);
+  const { codigo, creditos, horas, lugar, fecha_creacion } = certificado;
+  const query = 'UPDATE certificado SET codigo = ?, creditos = ?, horas = ?, lugar = ?, fecha_creacion = ? WHERE id = ?';
+  db.query(query, [codigo, creditos, horas, lugar, fecha_creacion, id], callback);
 }
 
 function eliminarCertificado(id, callback) {

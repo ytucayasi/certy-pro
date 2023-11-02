@@ -1,9 +1,9 @@
 const db = require('../config/db.js');
 
 function crearEstudiante(estudiante, callback) {
-  const { nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento } = estudiante;
-  const query = 'INSERT INTO estudiante (nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?)';
-  db.query(query, [nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento], callback);
+  const { nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento, usuario_id } = estudiante;
+  const query = 'INSERT INTO estudiante (nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  db.query(query, [nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento, usuario_id], callback);
 }
 
 function obtenerTodosEstudiantes(callback) {
