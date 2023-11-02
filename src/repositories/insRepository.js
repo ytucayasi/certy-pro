@@ -18,15 +18,13 @@ function obtenerIns(id, callback) {
   db.query(query, [id], (err, results) => {
     if (err) {
       callback(err, null);
+    } else if (results.length === 0){
+      callback(null, null);
     } else {
-      if (results.length === 0) {
-        callback(null, null);
-      } else {
         callback(null, results[0]);
       }
-    }
-  });
-}
+    });
+  }
 
 function actualizarIns(id, ins, callback) {
   const { nombre, codigo, url_logo, responsable, sector } = ins;
