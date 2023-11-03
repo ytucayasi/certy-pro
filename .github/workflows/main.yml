@@ -4,6 +4,4 @@
   uses: QAInsights/PerfAction@v3.1
   with:
     # jmeter test plan to execute
-    test-plan-path: 
-    # Optional arguments. For more details https://jmeter.apache.org/usermanual/get-started.html#non_gui
-    args: # optional
+    test-plan-path: './src/app.js'
