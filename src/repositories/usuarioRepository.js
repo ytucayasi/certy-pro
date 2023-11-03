@@ -1,54 +1,81 @@
-const db = require('../config/db.js');
+  const sql_connect = require('../config/db');
 
-function crearUsuario(usuario, callback) {
-  const { nombre, correo, clave, estado } = usuario;
-  const query = 'INSERT INTO usuario (nombre, correo, clave, estado) VALUES (?, ?, ?, ?)';
-  db.query(query, [nombre, correo, clave, estado], callback);
-}
-
-// Función para obtener todos los usuarios
-function obtenerTodos(callback) {
-  const query = 'SELECT * FROM usuario';
-  db.query(query, (err, results) => {
-    callback(err, results);
-  });
-}
-
-// Función para obtener un usuario por ID
-function obtenerUsuario(id, callback) {
-  const query = 'SELECT * FROM usuario WHERE id = ?';
-  db.query(query, [id], (err, results) => {
-    if (err) {
+  // Función para crear un usuario
+  async function crearUsuario(usuario, callback) {
+    try {
+      const db = await sql_connect(); // Establece una conexión a la base de datos
+      const { nombre, correo, clave, estado } = usuario;
+      const query = 'INSERT INTO usuario (nombre, correo, clave, estado) VALUES (?, ?, ?, ?)';
+      const [result] = await db.promise().query(query, [nombre, correo, clave, estado]);
+      await db.end(); // Cierra la conexión después de usarla
+      callback(null, result);
+    } catch (err) {
       callback(err, null);
-    } else {
+    }
+  }
+
+  // Función para obtener todos los usuarios
+  async function obtenerTodos(callback) {
+    try {
+      const db = await sql_connect(); // Establece una conexión a la base de datos
+      const query = 'SELECT * FROM usuario';
+      const [results] = await db.promise().query(query);
+      await db.end(); // Cierra la conexión después de usarla
+      callback(null, results);
+    } catch (err) {
+      callback(err, null);
+    }
+  }
+
+  // Función para obtener un usuario por ID
+  async function obtenerUsuario(id, callback) {
+    try {
+      const db = await sql_connect(); // Establece una conexión a la base de datos
+      const query = 'SELECT * FROM usuario WHERE id = ?';
+      const [results] = await db.promise().query(query, [id]);
+      await db.end(); // Cierra la conexión después de usarla
+
       if (results.length === 0) {
-        // Devuelve null si no se encontró ningún usuario
         callback(null, null);
       } else {
-        // Devuelve el usuario encontrado
         callback(null, results[0]);
       }
+    } catch (err) {
+      callback(err, null);
     }
-  });
-}
+  }
 
-// Función para actualizar un usuario
-function actualizarUsuario(id, usuario, callback) {
-  const { nombre, correo, clave, estado } = usuario;
-  const query = 'UPDATE usuario SET nombre = ?, correo = ?, clave = ?, estado = ? WHERE id = ?';
-  db.query(query, [nombre, correo, clave, estado, id], callback);
-}
+  // Función para actualizar un usuario
+  async function actualizarUsuario(id, usuario, callback) {
+    try {
+      const db = await sql_connect(); // Establece una conexión a la base de datos
+      const { nombre, correo, clave, estado } = usuario;
+      const query = 'UPDATE usuario SET nombre = ?, correo = ?, clave = ?, estado = ? WHERE id = ?';
+      const [result] = await db.promise().query(query, [nombre, correo, clave, estado, id]);
+      await db.end(); // Cierra la conexión después de usarla
+      callback(null, result);
+    } catch (err) {
+      callback(err, null);
+    }
+  }
 
-// Función para eliminar un usuario por ID
-function eliminarUsuario(id, callback) {
-  const query = 'DELETE FROM usuario WHERE id = ?';
-  db.query(query, [id], callback);
-}
+  // Función para eliminar un usuario por ID
+  async function eliminarUsuario(id, callback) {
+    try {
+      const db = await sql_connect(); // Establece una conexión a la base de datos
+      const query = 'DELETE FROM usuario WHERE id = ?';
+      const [result] = await db.promise().query(query, [id]);
+      await db.end(); // Cierra la conexión después de usarla
+      callback(null, result);
+    } catch (err) {
+      callback(err, null);
+    }
+  }
 
-module.exports = {
-  crearUsuario,
-  obtenerTodos,
-  obtenerUsuario,
-  actualizarUsuario,
-  eliminarUsuario
-};
+  module.exports = {
+    crearUsuario,
+    obtenerTodos,
+    obtenerUsuario,
+    actualizarUsuario,
+    eliminarUsuario
+  };
