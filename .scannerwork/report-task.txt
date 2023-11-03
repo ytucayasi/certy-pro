@@ -1,0 +1,6 @@
+projectKey=123456a
+serverUrl=http://docker.sonar:9000
+serverVersion=8.9.10.61524
+dashboardUrl=http://docker.sonar:9000/dashboard?id=123456a
+ceTaskId=AYuUUlmRNrDpkjl6vs9z
+ceTaskUrl=http://docker.sonar:9000/api/ce/task?id=AYuUUlmRNrDpkjl6vs9z
