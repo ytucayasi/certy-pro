@@ -4,9 +4,9 @@ const sql_connect = require('../config/db.js');
 async function crearCertificado(certificado, callback) {
   try {
     const db = await sql_connect(); // Establece una conexión a la base de datos
-    const { estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id } = certificado;
-    const query = 'INSERT INTO certificado (estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const [result] = await db.promise().query(query, [estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id]);
+    const { nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id } = certificado;
+    const query = 'INSERT INTO certificado (nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const [result] = await db.promise().query(query, [nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id]);
     await db.end(); // Cierra la conexión después de usarla
     callback(null, result);
   } catch (err) {
@@ -49,9 +49,9 @@ async function obtenerCertificado(id, callback) {
 async function actualizarCertificado(id, certificado, callback) {
   try {
     const db = await sql_connect(); // Establece una conexión a la base de datos
-    const { estado, codigo, creditos, horas, lugar, fecha_creacion } = certificado;
-    const query = 'UPDATE certificado SET estado = ?, codigo = ?, creditos = ?, horas = ?, lugar = ?, fecha_creacion = ? WHERE id = ?';
-    const [result] = await db.promise().query(query, [estado, codigo, creditos, horas, lugar, fecha_creacion, id]);
+    const { nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion } = certificado;
+    const query = 'UPDATE certificado SET nombre_certificado = ?, tipo = ?, estado = ?, codigo = ?, creditos = ?, horas = ?, lugar = ?, fecha_creacion = ? WHERE id = ?';
+    const [result] = await db.promise().query(query, [nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, id]);
     await db.end(); // Cierra la conexión después de usarla
     callback(null, result);
   } catch (err) {
