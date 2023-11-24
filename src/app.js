@@ -9,7 +9,10 @@ const privilegioRouter = require('./routes/privilegioRouter.js');
 const rolRouter = require('./routes/rolRouter.js');
 const prRouter = require('./routes/prRouter.js');
 const ruRouter = require('./routes/ruRouter.js');
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
 
 // Configurar encabezados de seguridad
 app.use((req, res, next) => {
