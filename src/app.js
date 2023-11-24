@@ -5,6 +5,10 @@ const insRouter = require('./routes/insRouter.js');
 const estudianteRouter = require('./routes/estudianteRouter.js');
 const certificadoRouter = require('./routes/certificadoRouter.js');
 const nivelAcademicoRouter = require('./routes/nivelAcademicoRouter.js');
+const privilegioRouter = require('./routes/privilegioRouter.js');
+const rolRouter = require('./routes/rolRouter.js');
+const prRouter = require('./routes/prRouter.js');
+const ruRouter = require('./routes/ruRouter.js');
 const app = express();
 
 // Configurar encabezados de seguridad
@@ -29,4 +33,10 @@ app.use('/api', insRouter);
 app.use('/api', estudianteRouter);
 app.use('/api', certificadoRouter);
 app.use('/api', nivelAcademicoRouter);
+app.use('/api', privilegioRouter);
+app.use('/api', rolRouter);
+app.use('/api', prRouter);
+app.use('/api', ruRouter);
+
+
 module.exports = app;
