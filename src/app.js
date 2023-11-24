@@ -9,6 +9,7 @@ const privilegioRouter = require('./routes/privilegioRouter.js');
 const rolRouter = require('./routes/rolRouter.js');
 const prRouter = require('./routes/prRouter.js');
 const ruRouter = require('./routes/ruRouter.js');
+const documentoCopiaRouter = require('./routes/documentoCopiaRouter.js');
 const app = express();
 
 // Configurar encabezados de seguridad
@@ -37,6 +38,7 @@ app.use('/api', privilegioRouter);
 app.use('/api', rolRouter);
 app.use('/api', prRouter);
 app.use('/api', ruRouter);
+app.use('/api', documentoCopiaRouter);
 
 
 module.exports = app;
