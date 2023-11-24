@@ -1,6 +1,7 @@
 class Certificado {
-  constructor({ id, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id }) {
+  constructor({ id, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id }) {
     this.id = id;
+    this.estado = estado;
     this.codigo = codigo;
     this.creditos = creditos;
     this.horas = horas;

@@ -49,6 +49,7 @@ describe('POST /api/certificados', () => {
     const response = await request(app)
       .post('/api/certificados')
       .send({
+        estado: '1',
         codigo: 'CERT123',
         creditos: 60,
         horas: 120,
@@ -89,6 +90,7 @@ describe('GET /api/certificados/:id', () => {
 describe('PUT /api/certificados/:id', () => {
   it('Debería actualizar un certificado por ID', async () => {
     const updatedCertificadoData = {
+      estado: '0',
       codigo: 'CERT456',
       creditos: 90,
       horas: 180,
