@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const usuarioRouter = require('./routes/usuarioRouter.js');
 const documentoRouter = require('./routes/documentoRouter.js');
 const insRouter = require('./routes/insRouter.js');
@@ -11,6 +12,8 @@ const prRouter = require('./routes/prRouter.js');
 const ruRouter = require('./routes/ruRouter.js');
 const documentoCopiaRouter = require('./routes/documentoCopiaRouter.js');
 const app = express();
+
+app.use(cors());
 
 // Configurar encabezados de seguridad
 app.use((req, res, next) => {
