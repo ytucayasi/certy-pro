@@ -11,6 +11,8 @@ const rolRouter = require('./routes/rolRouter.js');
 const prRouter = require('./routes/prRouter.js');
 const ruRouter = require('./routes/ruRouter.js');
 const documentoCopiaRouter = require('./routes/documentoCopiaRouter.js');
+const planEstudioRouter = require('./routes/planEstudioRouter.js');
+const peeRouter = require('./routes/peeRouter.js');
 const app = express();
 
 app.use(cors());
@@ -42,6 +44,8 @@ app.use('/api', rolRouter);
 app.use('/api', prRouter);
 app.use('/api', ruRouter);
 app.use('/api', documentoCopiaRouter);
+app.use('/api', planEstudioRouter);
+app.use('/api', peeRouter);
 
 
 module.exports = app;

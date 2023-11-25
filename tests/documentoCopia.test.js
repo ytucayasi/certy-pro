@@ -76,15 +76,15 @@ describe('PUT /api/documento_copia/:id', () => {
   });
 });
 
-// describe('DELETE /api/documento_copia/:id', () => {
-//   it('Debería eliminar un documento copia por ID', async () => {
-//     const response = await request(app).delete(`/api/documento_copia/${documentoCopiaId}`);
-//     expect(response.status).toBe(200);
-//   });
+describe('DELETE /api/documento_copia/:id', () => {
+  it('Debería eliminar un documento copia por ID', async () => {
+    const response = await request(app).delete(`/api/documento_copia/${documentoCopiaId}`);
+    expect(response.status).toBe(200);
+  });
 
-//   it('Debería manejar el caso en que el documento copia no existe', async () => {
-//     const documentoCopiaId = 999;
-//     const response = await request(app).delete(`/api/documento_copia/${documentoCopiaId}`);
-//     expect(response.status).toBe(404);
-//   });
-// });
+  it('Debería manejar el caso en que el documento copia no existe', async () => {
+    const documentoCopiaId = 999;
+    const response = await request(app).delete(`/api/documento_copia/${documentoCopiaId}`);
+    expect(response.status).toBe(404);
+  });
+});

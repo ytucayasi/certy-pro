@@ -3,7 +3,7 @@ const app = require('../src/app');
 
 let ruId;
 
-describe('POST /api/roles', () => {
+describe('POST /api/ru', () => {
   let roleId = 0;
   let userId = 0;
 
