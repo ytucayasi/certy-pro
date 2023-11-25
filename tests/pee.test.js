@@ -70,8 +70,8 @@ describe('GET /api/pee/:id', () => {
 describe('PUT /api/pee/:id', () => {
   it('Debería actualizar un PEE por ID', async () => {
     const updatedPeeData = {
-      estudiante_id: 12,
-      plan_estudio_id: 5,
+      estudiante_id: 1,
+      plan_estudio_id: 1,
     };
     const response = await request(app)
       .put(`/api/pee/${peeId}`)
@@ -82,8 +82,8 @@ describe('PUT /api/pee/:id', () => {
   it('Debería manejar el caso en que el PEE no existe', async () => {
     const nonExistingPEEId = 999;
     const updatedPeeData = {
-      estudiante_id: 12,
-      plan_estudio_id: 5,
+      estudiante_id: 1,
+      plan_estudio_id: 1,
     };
     const response = await request(app)
       .put(`/api/pee/${nonExistingPEEId}`)

@@ -13,6 +13,16 @@ const ruRouter = require('./routes/ruRouter.js');
 const documentoCopiaRouter = require('./routes/documentoCopiaRouter.js');
 const planEstudioRouter = require('./routes/planEstudioRouter.js');
 const peeRouter = require('./routes/peeRouter.js');
+const programaEstudioRouter = require('./routes/programaEstudioRouter.js');
+const unidadCompetenciaRouter = require('./routes/unidadCompetenciaRouter.js');
+const moduloFormativoRouter = require('./routes/moduloFormativoRouter.js');
+const unidadDidacticaRouter = require('./routes/unidadDidacticaRouter.js');
+const periodoRouter = require('./routes/periodoRouter.js');
+const pepeRouter = require('./routes/pepeRouter.js');
+const pemfRouter = require('./routes/pemfRouter.js');
+const ucudRouter = require('./routes/ucudRouter.js');
+const mfucRouter = require('./routes/mfucRouter.js');
+const udpRouter = require('./routes/udpRouter.js');
 const app = express();
 
 app.use(cors());
@@ -46,6 +56,16 @@ app.use('/api', ruRouter);
 app.use('/api', documentoCopiaRouter);
 app.use('/api', planEstudioRouter);
 app.use('/api', peeRouter);
+app.use('/api', programaEstudioRouter);
+app.use('/api', unidadCompetenciaRouter);
+app.use('/api', moduloFormativoRouter);
+app.use('/api', unidadDidacticaRouter);
+app.use('/api', periodoRouter);
+app.use('/api', pepeRouter);
+app.use('/api', ucudRouter);
+app.use('/api', mfucRouter);
+app.use('/api', pemfRouter);
+app.use('/api', udpRouter);
 
 
 module.exports = app;

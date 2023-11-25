@@ -4,7 +4,7 @@ const app = require('../src/app');
 
 let prId;
 
-describe('POST /api/roles', () => {
+describe('POST /api/pr', () => {
   let rolId = 0;
   let privilegioId = 0;
 
@@ -61,8 +61,8 @@ describe('GET /api/pr/:id', () => {
 describe('PUT /api/pr/:id', () => {
   it('Debería actualizar un PR por ID', async () => {
     const updatedPrData = {
-      privilegio_id: 2,
-      rol_id: 2,
+      privilegio_id: 1,
+      rol_id: 1,
     };
     const response = await request(app)
       .put(`/api/pr/${prId}`)
@@ -73,8 +73,8 @@ describe('PUT /api/pr/:id', () => {
   it('Debería manejar el caso en que el PR no existe', async () => {
     const nonExistingPrId = 999;
     const updatedPrData = {
-      privilegio_id: 2,
-      rol_id: 2,
+      privilegio_id: 1,
+      rol_id: 1,
     };
     const response = await request(app)
       .put(`/api/pr/${nonExistingPrId}`)

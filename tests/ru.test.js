@@ -60,8 +60,8 @@ describe('GET /api/ru/:id', () => {
 describe('PUT /api/ru/:id', () => {
   it('Debería actualizar un RU por ID', async () => {
     const updatedRuData = {
-      rol_id: 2,
-      usuario_id: 2,
+      rol_id: 1,
+      usuario_id: 1,
     };
     const response = await request(app)
       .put(`/api/ru/${ruId}`)
@@ -72,8 +72,8 @@ describe('PUT /api/ru/:id', () => {
   it('Debería manejar el caso en que el RU no existe', async () => {
     const nonExistingRuId = 999;
     const updatedRuData = {
-      rol_id: 2,
-      usuario_id: 2,
+      rol_id: 1,
+      usuario_id: 1,
     };
     const response = await request(app)
       .put(`/api/ru/${nonExistingRuId}`)

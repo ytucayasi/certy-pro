@@ -8,7 +8,7 @@ describe('POST /api/estudiantes', () => {
   it('Debería crear un nuevo usuario', async () => {
     const response = await request(app)
       .post('/api/usuarios')
-      .send({ nombre: 'Usuario de prueba', correo: 'prueba@example.com', clave: 'password', estado: '0' });
+      .send({ nombre: 'Usuario de prueba', correo: 'prueba@example.com', clave: 'password', estado: '1' });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     usuarioId = response.body.insertId;

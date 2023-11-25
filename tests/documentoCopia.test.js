@@ -53,7 +53,7 @@ describe('PUT /api/documento_copia/:id', () => {
       url_doc: 'https://example-update.com/documento_copia.pdf',
       estado: 'B',
       tipo: 'S',
-      documento_id: 2
+      documento_id: 1
     };
     const response = await request(app)
       .put(`/api/documento_copia/${documentoCopiaId}`)
@@ -67,7 +67,7 @@ describe('PUT /api/documento_copia/:id', () => {
       url_doc: 'https://example-update.com/documento_copia.pdf',
       estado: 'B',
       tipo: 'S',
-      documento_id: 2
+      documento_id: 1
     };
     const response = await request(app)
       .put(`/api/documento_copia/${documentoCopiaId}`)

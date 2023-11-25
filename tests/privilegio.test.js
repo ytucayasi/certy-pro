@@ -7,7 +7,7 @@ describe('POST /api/privilegios', () => {
   it('Debería crear un nuevo privilegio', async () => {
     const response = await request(app)
       .post('/api/privilegios')
-      .send({ nombre: 'Admin', estado: 'A' });
+      .send({ nombre: 'Admin', estado: '1' });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     privilegioId = response.body.insertId;
@@ -38,7 +38,7 @@ describe('GET /api/privilegios/:id', () => {
 
 describe('PUT /api/privilegios/:id', () => {
   it('Debería actualizar un privilegio por ID', async () => {
-    const updatedPrivilegioData = { nombre: 'Moderador', estado: 'A' };
+    const updatedPrivilegioData = { nombre: 'Moderador', estado: '1' };
     const response = await request(app)
       .put(`/api/privilegios/${privilegioId}`)
       .send(updatedPrivilegioData);

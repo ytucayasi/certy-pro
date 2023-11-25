@@ -7,7 +7,7 @@ describe('POST /api/roles', () => {
   it('Debería crear un nuevo rol', async () => {
     const response = await request(app)
       .post('/api/roles')
-      .send({ nombre: 'Admin', estado: 'A' });
+      .send({ nombre: 'Admin', estado: '1' });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     roleId = response.body.insertId;
@@ -40,7 +40,7 @@ describe('PUT /api/roles/:id', () => {
   it('Debería actualizar un rol por ID', async () => {
     const updatedRolData = {
       nombre: 'Moderador',
-      estado: 'A'
+      estado: '1'
     };
     const response = await request(app)
       .put(`/api/roles/${roleId}`)

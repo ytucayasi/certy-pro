@@ -12,7 +12,7 @@ describe('POST /api/certificados', () => {
   it('Debería crear un nuevo usuario', async () => {
     const response = await request(app)
       .post('/api/usuarios')
-      .send({ nombre: 'Usuario de prueba', correo: 'prueba@example.com', clave: 'password', estado: '0' });
+      .send({ nombre: 'Usuario de prueba', correo: 'prueba@example.com', clave: 'password', estado: '1' });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     usuarioId = response.body.insertId;
@@ -50,7 +50,7 @@ describe('POST /api/certificados', () => {
       .post('/api/certificados')
       .send({
         nombre_certificado: 'modulo de una',
-        tipo: '0',
+        tipo: '1',
         estado: '1',
         codigo: 'CERT123',
         creditos: 60,

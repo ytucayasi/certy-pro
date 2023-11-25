@@ -38,7 +38,7 @@ describe('GET /api/usuarios/:id', () => {
 
 describe('PUT /api/usuarios/:id', () => {
   it('Debería actualizar un usuario por ID', async () => {
-    const updatedUserData = { nombre: 'Usuario Actualizado', correo: 'prueba@example.com', clave: 'password', estado: '0' };
+    const updatedUserData = { nombre: 'Usuario Actualizado', correo: 'prueba@example.com', clave: 'password', estado: '1' };
     const response = await request(app)
       .put(`/api/usuarios/${usuarioId}`)
       .send(updatedUserData);
