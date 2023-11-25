@@ -45,6 +45,27 @@ async function obtenerEstudiante(id, callback) {
   }
 }
 
+// Función para obtener un estudiante y la relación con su usuario
+async function obtenerEstudianteUsuario(callback) {
+  try {
+    const db = await sql_connect();
+    const query = `
+      SELECT estudiante.*, usuario.nombre AS nombre_usuario, usuario.correo, usuario.clave, usuario.estado
+      FROM estudiante
+      INNER JOIN usuario ON estudiante.usuario_id = usuario.id
+    `;
+    const [results] = await db.promise().query(query);
+    await db.end();
+    if (results.length === 0) {
+      callback(null, null);
+    } else {
+      callback(null, results);
+    }
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
 // Función para actualizar un estudiante
 async function actualizarEstudiante(id, estudiante, callback) {
   try {
@@ -77,5 +98,6 @@ module.exports = {
   obtenerTodosEstudiantes,
   obtenerEstudiante,
   actualizarEstudiante,
-  eliminarEstudiante
+  eliminarEstudiante,
+  obtenerEstudianteUsuario
 };

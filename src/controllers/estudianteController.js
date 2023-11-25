@@ -4,7 +4,8 @@ const {
   obtenerTodosEstudiantes,
   obtenerEstudiante,
   actualizarEstudiante,
-  eliminarEstudiante
+  eliminarEstudiante,
+  obtenerEstudianteUsuario
 } = require('../repositories/estudianteRepository');
 
 const crearNuevoEstudiante = (req, res) => {
@@ -21,6 +22,17 @@ const crearNuevoEstudiante = (req, res) => {
 
 const obtenerTodosLosEstudiantes = (req, res) => {
   obtenerTodosEstudiantes((err, results) => {
+    if (err) {
+      console.error('Error al obtener elementos:', err);
+      res.status(500).json({ message: 'Error al obtener elementos' });
+      return;
+    }
+    res.status(200).json(results);
+  });
+};
+
+const obtenerEstudiantesConUsuarios = (req, res) => {
+  obtenerEstudianteUsuario((err, results) => {
     if (err) {
       console.error('Error al obtener elementos:', err);
       res.status(500).json({ message: 'Error al obtener elementos' });
@@ -85,5 +97,6 @@ module.exports = {
   obtenerTodosLosEstudiantes,
   obtenerEstudiantePorId,
   actualizarEstudiantePorId,
-  eliminarEstudiantePorId
+  eliminarEstudiantePorId,
+  obtenerEstudiantesConUsuarios
 };
