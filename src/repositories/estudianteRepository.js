@@ -57,9 +57,30 @@ async function obtenerEstudianteUsuario(callback) {
     const [results] = await db.promise().query(query);
     await db.end();
     if (results.length === 0) {
-      callback(null, null);
+      callback(null, results);
     } else {
       callback(null, results);
+    }
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
+async function obtenerEstudianteUsuarioPorCod(cod, callback) {
+  try {
+    const db = await sql_connect();
+    const query = `
+      SELECT estudiante.*, usuario.nombre AS nombre_usuario, usuario.correo, usuario.clave, usuario.estado
+      FROM estudiante
+      INNER JOIN usuario ON estudiante.usuario_id = usuario.id
+      WHERE estudiante.codigo_universitario LIKE ?
+    `;
+    const [results] = await db.promise().query(query, [`${cod}%`]);
+    await db.end();
+    if (results.length === 0) {
+      callback(null, null);
+    } else {
+      callback(null, results[0]);
     }
   } catch (err) {
     callback(err, null);
@@ -99,5 +120,6 @@ module.exports = {
   obtenerEstudiante,
   actualizarEstudiante,
   eliminarEstudiante,
-  obtenerEstudianteUsuario
+  obtenerEstudianteUsuario,
+  obtenerEstudianteUsuarioPorCod
 };

@@ -5,7 +5,8 @@ const {
   obtenerEstudiante,
   actualizarEstudiante,
   eliminarEstudiante,
-  obtenerEstudianteUsuario
+  obtenerEstudianteUsuario,
+  obtenerEstudianteUsuarioPorCod
 } = require('../repositories/estudianteRepository');
 
 const crearNuevoEstudiante = (req, res) => {
@@ -39,6 +40,23 @@ const obtenerEstudiantesConUsuarios = (req, res) => {
       return;
     }
     res.status(200).json(results);
+  });
+};
+
+const obtenerEstudianteUsuarioConCod = (req, res) => {
+  const estudianteCod = req.params.codigo;
+  obtenerEstudianteUsuarioPorCod(estudianteCod, (err, result) => {
+    if (err) {
+      console.error('Error al obtener un estudiante:', err);
+      res.status(500).json({ message: 'Error al obtener un estudiante' });
+      return;
+    }
+    if (!result) {
+      res.status(404).json({ message: 'Estudiante no encontrado' });
+    } else {
+      const estudianteConCod = {...result};
+      res.status(200).json(estudianteConCod);
+    }
   });
 };
 
@@ -98,5 +116,6 @@ module.exports = {
   obtenerEstudiantePorId,
   actualizarEstudiantePorId,
   eliminarEstudiantePorId,
-  obtenerEstudiantesConUsuarios
+  obtenerEstudiantesConUsuarios,
+  obtenerEstudianteUsuarioConCod
 };
