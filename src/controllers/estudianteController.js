@@ -54,8 +54,7 @@ const obtenerEstudianteUsuarioConCod = (req, res) => {
     if (!result) {
       res.status(404).json({ message: 'Estudiante no encontrado' });
     } else {
-      const estudianteConCod = {...result};
-      res.status(200).json(estudianteConCod);
+      res.status(200).json(result);
     }
   });
 };

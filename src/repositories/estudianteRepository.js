@@ -80,7 +80,7 @@ async function obtenerEstudianteUsuarioPorCod(cod, callback) {
     if (results.length === 0) {
       callback(null, null);
     } else {
-      callback(null, results[0]);
+      callback(null, results);
     }
   } catch (err) {
     callback(err, null);
