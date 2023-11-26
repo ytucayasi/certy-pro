@@ -61,6 +61,30 @@ async function actualizarUsuarioYEstudiante(idUsuario, datos, callback) {
   }
 }
 
+async function eliminarEstudianteYUsuario(idUsuario, callback) {
+  try {
+    const db = await sql_connect();
+
+    // Obtener el ID del estudiante asociado al usuario
+    const estudianteIdQuery = 'SELECT * FROM estudiante WHERE usuario_id=?';
+    const [estudianteIdResult] = await db.promise().query(estudianteIdQuery, [idUsuario]);
+    const estudianteId = estudianteIdResult[0].id;
+
+    // Eliminar datos del estudiante
+    const eliminarEstudianteQuery = 'DELETE FROM estudiante WHERE id=?';
+    await db.promise().query(eliminarEstudianteQuery, [estudianteId]);
+
+    // Eliminar datos del usuario
+    const eliminarUsuarioQuery = 'DELETE FROM usuario WHERE id=?';
+    await db.promise().query(eliminarUsuarioQuery, [idUsuario]);
+
+    await db.end();
+    callback(null, { mensaje: 'Estudiante y usuario eliminados exitosamente' });
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
 // Función para obtener todos los estudiantes
 async function obtenerTodosEstudiantes(callback) {
   try {
@@ -170,5 +194,6 @@ module.exports = {
   obtenerEstudianteUsuario,
   obtenerEstudianteUsuarioPorCod,
   crearUsuarioYEstudiante,
-  actualizarUsuarioYEstudiante
+  actualizarUsuarioYEstudiante,
+  eliminarEstudianteYUsuario
 };

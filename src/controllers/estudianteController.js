@@ -8,7 +8,8 @@ const {
   obtenerEstudianteUsuario,
   obtenerEstudianteUsuarioPorCod,
   crearUsuarioYEstudiante,
-  actualizarUsuarioYEstudiante
+  actualizarUsuarioYEstudiante,
+  eliminarEstudianteYUsuario
 } = require('../repositories/estudianteRepository');
 
 const crearNuevoEstudiante = (req, res) => {
@@ -68,6 +69,19 @@ const actualizarEstudianteYUsuario = (req, res) => {
     if (err) {
       console.error('Error al actualizar un estudiante:', err);
       res.status(500).json({ message: 'Error al actualizar un estudiante' });
+      return;
+    }
+    res.status(200).json(result);
+  });
+};
+
+const eliminarEstudianteConUsuario = (req, res) => {
+  const idUsuario = req.params.id; // Suponiendo que el ID del usuario está en los parámetros de la solicitud
+
+  eliminarEstudianteYUsuario(idUsuario, (err, result) => {
+    if (err) {
+      console.error('Error al eliminar estudiante y usuario:', err);
+      res.status(500).json({ message: 'Error al eliminar estudiante y usuario' });
       return;
     }
     res.status(200).json(result);
@@ -171,5 +185,6 @@ module.exports = {
   obtenerEstudiantesConUsuarios,
   obtenerEstudianteUsuarioConCod,
   crearNuevoEstudianteYUsuario,
-  actualizarEstudianteYUsuario
+  actualizarEstudianteYUsuario,
+  eliminarEstudianteConUsuario
 };

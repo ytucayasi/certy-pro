@@ -12,5 +12,6 @@ router.put('/estudiantes-usuarios/:id', estudianteController.actualizarEstudiant
 router.get('/estudiantes/:id', estudianteController.obtenerEstudiantePorId);
 router.put('/estudiantes/:id', estudianteController.actualizarEstudiantePorId);
 router.delete('/estudiantes/:id', estudianteController.eliminarEstudiantePorId);
+router.delete('/estudiantes-usuarios/:id', estudianteController.eliminarEstudianteConUsuario);
 
 module.exports = router;
