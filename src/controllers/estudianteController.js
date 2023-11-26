@@ -6,7 +6,9 @@ const {
   actualizarEstudiante,
   eliminarEstudiante,
   obtenerEstudianteUsuario,
-  obtenerEstudianteUsuarioPorCod
+  obtenerEstudianteUsuarioPorCod,
+  crearUsuarioYEstudiante,
+  actualizarUsuarioYEstudiante
 } = require('../repositories/estudianteRepository');
 
 const crearNuevoEstudiante = (req, res) => {
@@ -18,6 +20,57 @@ const crearNuevoEstudiante = (req, res) => {
       return;
     }
     res.status(201).json(result);
+  });
+};
+
+const crearNuevoEstudianteYUsuario = (req, res) => {
+  const { nombre, correo, clave, estado, nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento } = req.body;
+  const datos = {
+    nombre,
+    correo,
+    clave,
+    estado,
+    nombres,
+    apellidos,
+    foto,
+    dni,
+    codigo_universitario,
+    fecha_nacimiento,
+  };
+  crearUsuarioYEstudiante(datos, (err, result) => {
+    if (err) {
+      console.error('Error al crear un estudiante:', err);
+      res.status(500).json({ message: 'Error al crear un estudiante' });
+      return;
+    }
+    res.status(201).json(result);
+  });
+};
+
+const actualizarEstudianteYUsuario = (req, res) => {
+  const idUsuario = req.params.id; // Suponiendo que el ID del usuario está en los parámetros de la solicitud
+  const { nombre, correo, clave, estado, nombres, apellidos, foto, dni, codigo_universitario, fecha_nacimiento } = req.body;
+  
+  const datos = {
+    nombre,
+    correo,
+    clave,
+    estado,
+    nombres,
+    apellidos,
+    foto,
+    dni,
+    codigo_universitario,
+    fecha_nacimiento,
+  };
+
+  actualizarUsuarioYEstudiante(idUsuario, datos, (err, result) => {
+    if (err) {
+      console.error('Error al actualizar un estudiante:', err);
+      res.status(500).json({ message: 'Error al actualizar un estudiante' });
+      return;
+    }
+    res.status(200).json(result);
   });
 };
 
@@ -116,5 +169,7 @@ module.exports = {
   actualizarEstudiantePorId,
   eliminarEstudiantePorId,
   obtenerEstudiantesConUsuarios,
-  obtenerEstudianteUsuarioConCod
+  obtenerEstudianteUsuarioConCod,
+  crearNuevoEstudianteYUsuario,
+  actualizarEstudianteYUsuario
 };
