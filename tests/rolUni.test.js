@@ -9,7 +9,7 @@ describe('Rol Model', () => {
     const rolInstance = new Rol({
       id: 1,
       nombre: 'Nombre del Rol',
-      estado: 'activo'
+      estado: '1'
     });
     expect(rolInstance).toBeInstanceOf(Rol);
   });
@@ -18,11 +18,11 @@ describe('Rol Model', () => {
     const rolInstance = new Rol({
       id: 1,
       nombre: 'Nombre del Rol',
-      estado: 'activo'
+      estado: '1'
     });
     expect(rolInstance.id).toBe(1);
     expect(rolInstance.nombre).toBe('Nombre del Rol');
-    expect(rolInstance.estado).toBe('activo');
+    expect(rolInstance.estado).toBe('1');
   });
 });
 
@@ -38,7 +38,7 @@ describe('Rol Controller', () => {
     const mockReq = {
       body: {
         nombre: 'Nombre del Rol',
-        estado: 'activo'
+        estado: '1'
       }
     };
     const mockRes = {
@@ -75,12 +75,12 @@ describe('Rol Controller', () => {
       {
         id: 1,
         nombre: 'Nombre del Rol 1',
-        estado: 'activo'
+        estado: '1'
       },
       {
         id: 2,
         nombre: 'Nombre del Rol 2',
-        estado: 'inactivo'
+        estado: '0'
       }
     ];
 
@@ -107,7 +107,7 @@ describe('Rol Controller', () => {
     const mockResult = {
       id: 1,
       nombre: 'Nombre del Rol 1',
-      estado: 'activo'
+      estado: '1'
     };
 
     rolRepository.obtenerRol.mockImplementationOnce((id, callback) => {
@@ -126,7 +126,7 @@ describe('Rol Controller', () => {
       params: { id: 1 },
       body: {
         nombre: 'Nuevo Nombre del Rol',
-        estado: 'inactivo'
+        estado: '1'
       }
     };
     const mockRes = {

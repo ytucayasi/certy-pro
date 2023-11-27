@@ -19,7 +19,7 @@ describe('Usuario Model', () => {
       nombre: 'Nombre de Usuario',
       correo: 'usuario@example.com',
       clave: 'password123',
-      estado: 'activo'
+      estado: '1'
     });
   });
 
@@ -32,7 +32,7 @@ describe('Usuario Model', () => {
     expect(usuarioInstance.nombre).toBe('Nombre de Usuario');
     expect(usuarioInstance.correo).toBe('usuario@example.com');
     expect(usuarioInstance.clave).toBe('password123');
-    expect(usuarioInstance.estado).toBe('activo');
+    expect(usuarioInstance.estado).toBe('1');
   });
 });
 
@@ -47,7 +47,7 @@ describe('Usuario Controller', () => {
         nombre: 'Nombre de Usuario',
         correo: 'usuario@example.com',
         clave: 'password123',
-        estado: 'activo'
+        estado: '1'
       }
     };
     const mockRes = {
@@ -86,14 +86,14 @@ describe('Usuario Controller', () => {
         nombre: 'Nombre de Usuario 1',
         correo: 'usuario1@example.com',
         clave: 'password123',
-        estado: 'activo'
+        estado: '1'
       },
       {
         id: 2,
         nombre: 'Nombre de Usuario 2',
         correo: 'usuario2@example.com',
         clave: 'password456',
-        estado: 'inactivo'
+        estado: 'in1'
       }
     ];
 
@@ -122,7 +122,7 @@ describe('Usuario Controller', () => {
       nombre: 'Nombre de Usuario 1',
       correo: 'usuario1@example.com',
       clave: 'password123',
-      estado: 'activo'
+      estado: '1'
     };
 
     obtenerUsuario.mockImplementationOnce((id, callback) => {
@@ -143,7 +143,7 @@ describe('Usuario Controller', () => {
         nombre: 'Nuevo Nombre de Usuario',
         correo: 'nuevo_usuario@example.com',
         clave: 'nueva_clave',
-        estado: 'inactivo'
+        estado: 'in1'
       }
     };
     const mockRes = {

@@ -6,18 +6,14 @@ jest.mock('../src/repositories/documentoRepository');
 
 describe('Documento Model', () => {
   it('debe devolver la URL completa del documento', () => {
-    // Arrange
     const documentoData = {
       id: 1,
       url_doc: 'ruta/al/documento.pdf',
       estado: '1'
     };
-    
-    // Act
     const documento = new Documento(documentoData);
     const urlCompleta = documento.getURLCompleta();
-    
-    // Assert
+
     expect(urlCompleta).toBe('ruta/al/documento.pdf');
   });
 });
@@ -33,7 +29,7 @@ describe('Documento Controller', () => {
     const mockReq = {
       body: {
         url_doc: 'ruta/al/nuevo_documento.pdf',
-        estado: 'a1'
+        estado: '1'
       }
     };
     const mockRes = {
@@ -106,7 +102,7 @@ describe('Documento Controller', () => {
     };
 
     documentoRepository.eliminarDocumento.mockImplementationOnce((id, callback) => {
-      callback(null, { affectedRows: 1 }); // Simulando que se eliminó correctamente
+      callback(null, { affectedRows: 1 });
     });
 
     documentoController.eliminarDocumentoPorId(mockReq, mockRes);

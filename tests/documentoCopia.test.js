@@ -18,7 +18,7 @@ describe('POST /api/documento_copia', () => {
   it('Debería crear un nuevo documento copia', async () => {
     const response = await request(app)
       .post('/api/documento_copia')
-      .send({ url_doc: 'https://example.com/documento_copia.pdf', estado: 'A', tipo: 'T', documento_id: documentoId });
+      .send({ url_doc: 'https://example.com/documento_copia.pdf', estado: '1', tipo: '1', documento_id: documentoId });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     documentoCopiaId = response.body.insertId;
@@ -51,8 +51,8 @@ describe('PUT /api/documento_copia/:id', () => {
   it('Debería actualizar un documento copia por ID', async () => {
     const updatedDocumentoCopiaData = {
       url_doc: 'https://example-update.com/documento_copia.pdf',
-      estado: 'B',
-      tipo: 'S',
+      estado: '1',
+      tipo: '1',
       documento_id: 1
     };
     const response = await request(app)
@@ -65,8 +65,8 @@ describe('PUT /api/documento_copia/:id', () => {
     const documentoCopiaId = 999;
     const updatedDocumentoCopiaData = {
       url_doc: 'https://example-update.com/documento_copia.pdf',
-      estado: 'B',
-      tipo: 'S',
+      estado: '1',
+      tipo: '1',
       documento_id: 1
     };
     const response = await request(app)

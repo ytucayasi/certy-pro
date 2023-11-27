@@ -4,14 +4,6 @@ const estudianteRepository = require('../src/repositories/estudianteRepository')
 const {
   crearEstudiante,
   obtenerTodosEstudiantes,
-  obtenerEstudiante,
-  actualizarEstudiante,
-  eliminarEstudiante,
-  obtenerEstudianteUsuario,
-  obtenerEstudianteUsuarioPorCod,
-  crearUsuarioYEstudiante,
-  actualizarUsuarioYEstudiante,
-  eliminarEstudianteYUsuario
 } = require('../src/repositories/estudianteRepository');
 
 jest.mock('../src/repositories/estudianteRepository');

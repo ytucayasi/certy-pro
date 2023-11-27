@@ -17,7 +17,7 @@ describe('Privilegio Model', () => {
     privilegioInstance = new Privilegio({
       id: 1,
       nombre: 'Nombre de Privilegio',
-      estado: 'activo'
+      estado: '1'
     });
   });
 
@@ -28,7 +28,7 @@ describe('Privilegio Model', () => {
   test('Propiedades del modelo Privilegio', () => {
     expect(privilegioInstance.id).toBe(1);
     expect(privilegioInstance.nombre).toBe('Nombre de Privilegio');
-    expect(privilegioInstance.estado).toBe('activo');
+    expect(privilegioInstance.estado).toBe('1');
   });
 });
 
@@ -42,7 +42,7 @@ describe('Privilegio Controller', () => {
     const mockReq = {
       body: {
         nombre: 'Nombre de Privilegio',
-        estado: 'activo'
+        estado: '1'
       }
     };
     const mockRes = {
@@ -78,12 +78,12 @@ describe('Privilegio Controller', () => {
       {
         id: 1,
         nombre: 'Nombre de Privilegio 1',
-        estado: 'activo'
+        estado: '1'
       },
       {
         id: 2,
         nombre: 'Nombre de Privilegio 2',
-        estado: 'inactivo'
+        estado: 'in1'
       }
     ];
 
@@ -110,7 +110,7 @@ describe('Privilegio Controller', () => {
     const mockResult = {
       id: 1,
       nombre: 'Nombre de Privilegio 1',
-      estado: 'activo'
+      estado: '1'
     };
 
     obtenerPrivilegio.mockImplementationOnce((id, callback) => {
@@ -129,7 +129,7 @@ describe('Privilegio Controller', () => {
       params: { id: 1 },
       body: {
         nombre: 'Nuevo Nombre de Privilegio',
-        estado: 'inactivo'
+        estado: 'in1'
       }
     };
     const mockRes = {

@@ -1,11 +1,15 @@
 const sql_connect = require('../config/db');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 async function crearUsuario(usuario, callback) {
   try {
     const db = await sql_connect();
     const { nombre, correo, clave, estado } = usuario;
+    const claveEncriptada = await bcrypt.hash(clave, saltRounds);
+
     const query = 'INSERT INTO usuario (nombre, correo, clave, estado) VALUES (?, ?, ?, ?)';
-    const [result] = await db.promise().query(query, [nombre, correo, clave, estado]);
+    const [result] = await db.promise().query(query, [nombre, correo, claveEncriptada, estado]);
     await db.end();
     callback(null, result);
   } catch (err) {
@@ -35,10 +39,18 @@ async function iniciarSesionUsuario(correo, clave, callback) {
   try {
     const usuario = await obtenerUsuarioConRolPorCorreo(correo);
 
-    if (usuario && usuario.clave === clave) {
-      callback(null, usuario);
+    if (usuario) {
+      // Verificar si la contraseña coincide utilizando bcrypt.compare()
+      const claveCoincide = await bcrypt.compare(clave, usuario.clave);
+
+      if (claveCoincide) {
+        callback(null, usuario);
+      } else {
+        const error = new Error('Credenciales inválidas');
+        callback(error, null);
+      }
     } else {
-      const error = new Error('Credenciales inválidas');
+      const error = new Error('Usuario no encontrado');
       callback(error, null);
     }
   } catch (err) {
@@ -79,10 +91,19 @@ async function actualizarUsuario(id, usuario, callback) {
   try {
     const db = await sql_connect();
     const { nombre, correo, clave, estado } = usuario;
-    const query = 'UPDATE usuario SET nombre = ?, correo = ?, clave = ?, estado = ? WHERE id = ?';
-    const [result] = await db.promise().query(query, [nombre, correo, clave, estado, id]);
-    await db.end();
-    callback(null, result);
+
+    if (clave) {
+      const claveEncriptada = await bcrypt.hash(clave, saltRounds);
+      const query = 'UPDATE usuario SET nombre = ?, correo = ?, clave = ?, estado = ? WHERE id = ?';
+      const [result] = await db.promise().query(query, [nombre, correo, claveEncriptada, estado, id]);
+      await db.end();
+      callback(null, result);
+    } else {
+      const query = 'UPDATE usuario SET nombre = ?, correo = ?, estado = ? WHERE id = ?';
+      const [result] = await db.promise().query(query, [nombre, correo, estado, id]);
+      await db.end();
+      callback(null, result);
+    }
   } catch (err) {
     callback(err, null);
   }
