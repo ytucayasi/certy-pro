@@ -4,7 +4,8 @@ const {
   obtenerTodos,
   obtenerUsuario,
   actualizarUsuario,
-  eliminarUsuario
+  eliminarUsuario,
+  iniciarSesionUsuario
 } = require('../repositories/usuarioRepository');
 
 // Función para crear un nuevo usuario
@@ -20,7 +21,22 @@ const crearNuevoUsuario = (req, res) => {
   });
 };
 
-// Función para obtener todos los usuarios
+const iniciarSesion = (req, res) => {
+  const { correo, clave } = req.body;
+  iniciarSesionUsuario(correo, clave, (err, usuarioConRol) => {
+    if (err) {
+      console.error('Error al iniciar sesión:', err);
+      res.status(500).json({ message: 'Error al iniciar sesión' });
+      return;
+    }
+    if (usuarioConRol) {
+      res.status(200).json(usuarioConRol);
+    } else {
+      res.status(401).json({ message: 'Credenciales inválidas' });
+    }
+  });
+};
+
 const obtenerTodosLosUsuarios = (req, res) => {
   obtenerTodos((err, results) => {
     if (err) {
@@ -90,5 +106,6 @@ module.exports = {
   obtenerTodosLosUsuarios,
   obtenerUsuarioPorId,
   actualizarUsuarioPorId,
-  eliminarUsuarioPorId
+  eliminarUsuarioPorId,
+  iniciarSesion
 };
