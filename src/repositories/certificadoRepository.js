@@ -14,31 +14,50 @@ async function crearCertificado(certificado, callback) {
   }
 }
 
-// Función para obtener todos los certificados
-async function obtenerTodosCertificados(callback) {
+async function obtenerCertificados(id, callback) {
   try {
     const db = await sql_connect(); // Establece una conexión a la base de datos
-    const query = 'SELECT * FROM certificado';
-    const [results] = await db.promise().query(query);
-    await db.end(); // Cierra la conexión después de usarla
-    callback(null, results);
-  } catch (err) {
-    callback(err, null);
-  }
-}
+    let query =
+      'SELECT ' +
+      'certificado.id AS certificado_id, ' +
+      'certificado.nombre_certificado, ' +
+      'certificado.tipo AS certificado_tipo, ' +
+      'certificado.estado AS certificado_estado, ' +
+      'certificado.codigo, ' +
+      'certificado.creditos, ' +
+      'certificado.horas, ' +
+      'certificado.lugar, ' +
+      'certificado.fecha_creacion, ' +
+      
+      'estudiante.id AS estudiante_id, ' +
+      'estudiante.nombres AS estudiante_nombres, ' +
+      'estudiante.apellidos AS estudiante_apellidos, ' +
+      'estudiante.dni AS estudiante_dni, ' +
+      'estudiante.codigo_universitario, ' +
+      'estudiante.usuario_id AS estudiante_usuario_id, ' +
+      
+      'documento.id AS documento_id, ' +
+      'documento.url_doc, ' +
+      
+      'nivel_academico.id AS nivel_academico_id, ' +
+      'nivel_academico.nivel ' +
+      
+      'FROM certificado ' +
+      'JOIN estudiante ON certificado.estudiante_id = estudiante.id ' +
+      'JOIN documento ON certificado.documento_id = documento.id ' +
+      'JOIN nivel_academico ON certificado.nivel_academico_id = nivel_academico.id';
 
-// Función para obtener un certificado por ID
-async function obtenerCertificado(id, callback) {
-  try {
-    const db = await sql_connect(); // Establece una conexión a la base de datos
-    const query = 'SELECT * FROM certificado WHERE id = ?';
-    const [results] = await db.promise().query(query, [id]);
+    if (id) {
+      query += ' WHERE certificado.id LIKE ?';
+    }
+
+    const [results] = await db.promise().query(query, id ? [`${id}%`] : null);
     await db.end(); // Cierra la conexión después de usarla
 
-    if (results.length === 0) {
+    if (id && results.length === 0) {
       callback(null, null);
     } else {
-      callback(null, results[0]);
+      callback(null, id ? results : results);
     }
   } catch (err) {
     callback(err, null);
@@ -74,8 +93,7 @@ async function eliminarCertificado(id, callback) {
 
 module.exports = {
   crearCertificado,
-  obtenerTodosCertificados,
-  obtenerCertificado,
+  obtenerCertificados,
   actualizarCertificado,
   eliminarCertificado
 };

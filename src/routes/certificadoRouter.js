@@ -3,9 +3,8 @@ const certificadoController = require('../controllers/certificadoController.js')
 
 const router = express.Router();
 
-router.get('/certificados', certificadoController.obtenerTodosLosCertificados);
+router.get('/certificados/:id?', certificadoController.obtenerCertificadosControl);
 router.post('/certificados', certificadoController.crearNuevoCertificado);
-router.get('/certificados/:id', certificadoController.obtenerCertificadoPorId);
 router.put('/certificados/:id', certificadoController.actualizarCertificadoPorId);
 router.delete('/certificados/:id', certificadoController.eliminarCertificadoPorId);
 

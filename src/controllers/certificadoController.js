@@ -1,8 +1,7 @@
 const Certificado = require('../models/Certificado');
 const {
   crearCertificado,
-  obtenerTodosCertificados,
-  obtenerCertificado,
+  obtenerCertificados,
   actualizarCertificado,
   eliminarCertificado
 } = require('../repositories/certificadoRepository');
@@ -19,30 +18,52 @@ const crearNuevoCertificado = (req, res) => {
   });
 };
 
-const obtenerTodosLosCertificados = (req, res) => {
-  obtenerTodosCertificados((err, results) => {
-    if (err) {
-      console.error('Error al obtener elementos:', err);
-      res.status(500).json({ message: 'Error al obtener elementos' });
-      return;
-    }
-    res.status(200).json(results);
-  });
-};
-
-const obtenerCertificadoPorId = (req, res) => {
+const obtenerCertificadosControl = (req, res) => {
   const certificadoId = req.params.id;
-  obtenerCertificado(certificadoId, (err, result) => {
+  obtenerCertificados(certificadoId, (err, results) => {
     if (err) {
-      console.error('Error al obtener un certificado:', err);
-      res.status(500).json({ message: 'Error al obtener un certificado' });
+      console.error('Error al obtener certificados:', err);
+      res.status(500).json({ message: 'Error al obtener certificados' });
       return;
     }
-    if (!result) {
-      res.status(404).json({ message: 'Certificado no encontrado' });
+    if (!results) {
+      res.status(404).json({ message: 'Certificados no encontrados' });
     } else {
-      const certificadoConId = { id: certificadoId, ...result };
-      res.status(200).json(certificadoConId);
+      // Formatear los resultados
+      const certificados = results.map((certificado) => ({
+        certificado: {
+          id: certificado.certificado_id,
+          nombre_certificado: certificado.nombre_certificado,
+          tipo: certificado.certificado_tipo,
+          estado: certificado.certificado_estado,
+          codigo: certificado.codigo,
+          creditos: certificado.creditos,
+          horas: certificado.horas,
+          lugar: certificado.lugar,
+          fecha_creacion: certificado.fecha_creacion,
+          // otros campos de certificado que puedas necesitar
+        },
+        estudiante: {
+          id: certificado.estudiante_id,
+          nombres: certificado.estudiante_nombres,
+          apellidos: certificado.estudiante_apellidos,
+          dni: certificado.estudiante_dni,
+          codigo_universitario: certificado.codigo_universitario,
+          usuario_id: certificado.estudiante_usuario_id,
+        },
+        documento: {
+          id: certificado.documento_id,
+          url_doc: certificado.url_doc,
+          // otros campos de documento que puedas necesitar
+        },
+        nivel_academico: {
+          id: certificado.nivel_academico_id,
+          nivel: certificado.nivel,
+          // otros campos de nivel_academico que puedas necesitar
+        },
+      }));
+
+      res.status(200).json(certificados);
     }
   });
 };
@@ -82,8 +103,7 @@ const eliminarCertificadoPorId = (req, res) => {
 
 module.exports = {
   crearNuevoCertificado,
-  obtenerTodosLosCertificados,
-  obtenerCertificadoPorId,
+  obtenerCertificadosControl,
   actualizarCertificadoPorId,
   eliminarCertificadoPorId
 };
