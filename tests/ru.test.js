@@ -10,7 +10,7 @@ describe('POST /api/ru', () => {
   it('Debería crear un nuevo rol', async () => {
     const response = await request(app)
       .post('/api/roles')
-      .send({ nombre: 'Admin', estado: 'A' });
+      .send({ nombre: 'Admin', estado: '1' });
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('affectedRows', 1);
     roleId = response.body.insertId;

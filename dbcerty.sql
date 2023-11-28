@@ -65,7 +65,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO rol (`id`, `nombre`, `estado`) VALUES ('1', 'Administrador', '1');
+INSERT INTO rol (`id`, `nombre`, `estado`) VALUES ('1', 'Admin', '1');
 INSERT INTO rol (`id`, `nombre`, `estado`) VALUES ('2', 'Secretaria', '1');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -111,8 +111,8 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `correo` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `clave` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `correo` varchar(254) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `clave` varchar(254) COLLATE utf8mb4_spanish_ci NOT NULL,
   `estado` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
