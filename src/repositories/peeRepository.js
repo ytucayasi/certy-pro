@@ -13,6 +13,49 @@ async function crearPEE(pee, callback) {
   }
 }
 
+async function obtenerTodosLosPEE() {
+  try {
+    const db = await sql_connect();
+    const query =
+      'SELECT pee.*, estudiante.nombres, estudiante.apellidos, estudiante.foto, estudiante.dni, estudiante.codigo_universitario, estudiante.fecha_nacimiento, estudiante.usuario_id, plan_estudio.nombre AS plan_estudio_nombre ' +
+      'FROM pee ' +
+      'JOIN estudiante ON pee.estudiante_id = estudiante.id ' +
+      'JOIN plan_estudio ON pee.plan_estudio_id = plan_estudio.id';
+
+    const [results] = await db.promise().query(query);
+    await db.end();
+
+    return results;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function obtenerPEEConEstudiantePorId(peeId, callback) {
+  try {
+    const db = await sql_connect();
+
+    const query =
+      'SELECT pee.*, estudiante.nombres, estudiante.apellidos, estudiante.foto, estudiante.dni, estudiante.codigo_universitario, estudiante.fecha_nacimiento, estudiante.usuario_id, plan_estudio.nombre AS plan_estudio_nombre ' +
+      'FROM pee ' +
+      'JOIN estudiante ON pee.estudiante_id = estudiante.id ' +
+      'JOIN plan_estudio ON pee.plan_estudio_id = plan_estudio.id ' +
+      'WHERE pee.estudiante_id = ?';
+
+    const [result] = await db.promise().query(query, [peeId]);
+    console.log(result);
+    await db.end();
+
+    if (result.length === 0) {
+      callback(null, null); // PEE no encontrado
+    } else {
+      callback(null, result);
+    }
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
 async function obtenerTodosPEE(callback) {
   try {
     const db = await sql_connect();
@@ -72,5 +115,7 @@ module.exports = {
   obtenerTodosPEE,
   obtenerPEE,
   actualizarPEE,
-  eliminarPEE
+  eliminarPEE,
+  obtenerTodosLosPEE,
+  obtenerPEEConEstudiantePorId
 };

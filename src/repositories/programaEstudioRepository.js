@@ -25,6 +25,8 @@ async function obtenerTodosProgramasEstudio(callback) {
   }
 }
 
+
+
 async function obtenerProgramaEstudio(id, callback) {
   try {
     const db = await sql_connect(); // Establece una conexión a la base de datos
@@ -72,5 +74,5 @@ module.exports = {
   obtenerTodosProgramasEstudio,
   obtenerProgramaEstudio,
   actualizarProgramaEstudio,
-  eliminarProgramaEstudio
+  eliminarProgramaEstudio,
 };

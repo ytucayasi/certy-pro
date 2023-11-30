@@ -4,7 +4,8 @@ const {
   obtenerTodosPEMF,
   obtenerPEMF,
   actualizarPEMF,
-  eliminarPEMF
+  eliminarPEMF,
+  obtenerModulosPorPrograma
 } = require('../repositories/pemfRepository');
 
 const crearNuevoPEMF = (req, res) => {
@@ -19,6 +20,18 @@ const crearNuevoPEMF = (req, res) => {
     }
     res.status(201).json(result);
   });
+};
+
+const obtenerModulosPorProgramaController = async (req, res) => {
+  const programaEstudioId = req.params.programaEstudioId;
+
+  try {
+    const resultados = await obtenerModulosPorPrograma(programaEstudioId);
+    res.status(200).json(resultados);
+  } catch (error) {
+    console.error('Error al obtener información del programa de estudio:', error);
+    res.status(500).json({ message: 'Error al obtener información del programa de estudio' });
+  }
 };
 
 const obtenerTodosLosPEMF = (req, res) => {
@@ -89,5 +102,6 @@ module.exports = {
   obtenerTodosLosPEMF,
   obtenerPEMFPorId,
   actualizarPEMFPorId,
-  eliminarPEMFPorId
+  eliminarPEMFPorId,
+  obtenerModulosPorProgramaController
 };

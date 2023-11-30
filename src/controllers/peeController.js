@@ -4,7 +4,9 @@ const {
   obtenerTodosPEE,
   obtenerPEE,
   actualizarPEE,
-  eliminarPEE
+  eliminarPEE,
+  obtenerTodosLosPEE,
+  obtenerPEEConEstudiantePorId
 } = require('../repositories/peeRepository');
 
 const crearNuevoPEE = (req, res) => {
@@ -21,7 +23,7 @@ const crearNuevoPEE = (req, res) => {
   });
 };
 
-const obtenerTodosLosPEE = (req, res) => {
+const obtenerTodosLosPEENormal = (req, res) => {
   obtenerTodosPEE((err, results) => {
     if (err) {
       console.error('Error al obtener PEEs:', err);
@@ -29,6 +31,36 @@ const obtenerTodosLosPEE = (req, res) => {
       return;
     }
     res.status(200).json(results);
+  });
+};
+
+const obtenerTodosLosPEEMejorado = (req, res) => {
+  obtenerTodosLosPEE((err, results) => {
+    if (err) {
+      console.error('Error al obtener PEEs:', err);
+      res.status(500).json({ message: 'Error al obtener PEEs' });
+      return;
+    }
+    res.status(200).json(results);
+  });
+};
+
+const obtenerPEEConEstudiantePorIdMejorado = (req, res) => {
+  const peeId = req.params.id;
+
+  obtenerPEEConEstudiantePorId(peeId, (err, result) => {
+    if (err) {
+      console.error(`Error al obtener PEE con ID ${peeId}:`, err);
+      res.status(500).json({ message: `Error al obtener PEE con ID ${peeId}` });
+      return;
+    }
+
+    if (!result) {
+      res.status(404).json({ message: `PEE con ID ${peeId} no encontrado` });
+      return;
+    }
+
+    res.status(200).json(result);
   });
 };
 
@@ -86,8 +118,10 @@ const eliminarPEEPorId = (req, res) => {
 
 module.exports = {
   crearNuevoPEE,
-  obtenerTodosLosPEE,
+  obtenerTodosLosPEENormal,
   obtenerPEEPorId,
   actualizarPEEPorId,
-  eliminarPEEPorId
+  eliminarPEEPorId,
+  obtenerTodosLosPEEMejorado,
+  obtenerPEEConEstudiantePorIdMejorado
 };

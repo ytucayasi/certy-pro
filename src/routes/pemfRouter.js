@@ -9,4 +9,6 @@ router.get('/pemf/:id', pemfController.obtenerPEMFPorId);
 router.put('/pemf/:id', pemfController.actualizarPEMFPorId);
 router.delete('/pemf/:id', pemfController.eliminarPEMFPorId);
 
+router.get('/pemf-programas/:programaEstudioId/', pemfController.obtenerModulosPorProgramaController);
+
 module.exports = router;

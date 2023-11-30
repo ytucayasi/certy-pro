@@ -34,7 +34,7 @@ async function crearUsuarioYEstudiante(datos, callback) {
     callback(err, null);
   }
 }
-
+ 
 async function actualizarUsuarioYEstudiante(idUsuario, datos, callback) {
   try {
     const db = await sql_connect();

@@ -4,7 +4,9 @@ const {
   obtenerTodosPEPE,
   obtenerPEPE,
   actualizarPEPE,
-  eliminarPEPE
+  eliminarPEPE,
+  obtenerProgramasPorPlan,
+  obtenerEstadoYNombreDelPrograma
 } = require('../repositories/pepeRepository');
 
 const crearNuevoPEPE = (req, res) => {
@@ -19,6 +21,30 @@ const crearNuevoPEPE = (req, res) => {
     }
     res.status(201).json(result);
   });
+};
+
+const obtenerProgramasPorPlanController = async (req, res) => {
+  const planEstudioId = req.params.planEstudioId;
+
+  try {
+    const resultados = await obtenerProgramasPorPlan(planEstudioId);
+    res.status(200).json(resultados);
+  } catch (error) {
+    console.error('Error al obtener información del plan:', error);
+    res.status(500).json({ message: 'Error al obtener información del plan' });
+  }
+};
+
+const obtenerEstadoYNombreController = async (req, res) => {
+  const programaId = req.params.programaId;
+
+  try {
+    const resultado = await obtenerEstadoYNombreDelPrograma(programaId);
+    res.status(200).json(resultado);
+  } catch (error) {
+    console.error('Error al obtener estado y nombre del programa:', error);
+    res.status(500).json({ message: 'Error al obtener estado y nombre del programa' });
+  }
 };
 
 const obtenerTodosLosPEPE = (req, res) => {
@@ -89,5 +115,7 @@ module.exports = {
   obtenerTodosLosPEPE,
   obtenerPEPEPorId,
   actualizarPEPEPorId,
-  eliminarPEPEPorId
+  eliminarPEPEPorId,
+  obtenerProgramasPorPlanController,
+  obtenerEstadoYNombreController
 };
