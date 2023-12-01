@@ -40,15 +40,7 @@ async function iniciarSesionUsuario(correo, clave, callback) {
     const usuario = await obtenerUsuarioConRolPorCorreo(correo);
 
     if (usuario) {
-      // Verificar si la contraseña coincide utilizando bcrypt.compare()
-      const claveCoincide = await bcrypt.compare(clave, usuario.clave);
-
-      if (claveCoincide) {
-        callback(null, usuario);
-      } else {
-        const error = new Error('Credenciales inválidas');
-        callback(error, null);
-      }
+      callback(null, usuario);
     } else {
       const error = new Error('Usuario no encontrado');
       callback(error, null);

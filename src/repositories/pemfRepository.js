@@ -26,7 +26,7 @@ const obtenerModulosPorPrograma = async (programaEstudioId) => {
     `;
     
     const [results] = await db.promise().query(query, [programaEstudioId]);
-
+    console.log(results);
     await db.end();
 
     if (results.length === 0) {

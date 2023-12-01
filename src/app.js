@@ -48,7 +48,6 @@ app.use('/api', documentoRouter);
 app.use('/api', insRouter);
 app.use('/api', estudianteRouter);
 app.use('/api', certificadoRouter);
-app.use('/api', nivelAcademicoRouter);
 app.use('/api', privilegioRouter);
 app.use('/api', rolRouter);
 app.use('/api', prRouter);

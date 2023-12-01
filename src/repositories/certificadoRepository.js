@@ -4,11 +4,70 @@ const sql_connect = require('../config/db.js');
 async function crearCertificado(certificado, callback) {
   try {
     const db = await sql_connect(); // Establece una conexión a la base de datos
-    const { nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id } = certificado;
-    const query = 'INSERT INTO certificado (nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const [result] = await db.promise().query(query, [nombre_certificado, tipo, estado, codigo, creditos, horas, lugar, fecha_creacion, nivel_academico_id, documento_id, estudiante_id]);
+    const { nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_creacion, documento_id, estudiante_id } = certificado;
+    const query = 'INSERT INTO certificado (nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_creacion, documento_id, estudiante_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const [result] = await db.promise().query(query, [nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_creacion, documento_id, estudiante_id]);
     await db.end(); // Cierra la conexión después de usarla
     callback(null, result);
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
+async function actualizarDocumentoDesdeCertificado(certificadoId, nuevoDocumento, callback) {
+  try {
+    const db = await sql_connect(); // Establece una conexión a la base de datos
+
+    // Obtiene el ID del documento asociado al certificado
+    const obtenerDocumentoIdQuery = 'SELECT documento_id FROM certificado WHERE id = ?';
+    const [documentoIdResult] = await db.promise().query(obtenerDocumentoIdQuery, [certificadoId]);
+
+    if (documentoIdResult.length === 0) {
+      // El certificado no existe
+      throw new Error('Certificado no encontrado');
+    }
+
+    const documentoId = documentoIdResult[0].documento_id;
+
+    // Actualiza el documento en la base de datos
+    const { url_doc, estado } = nuevoDocumento;
+    const actualizarDocumentoQuery = 'UPDATE documento SET url_doc = ?, estado = ? WHERE id = ?';
+    const [resultado] = await db.promise().query(actualizarDocumentoQuery, [url_doc, estado, documentoId]);
+
+    // Cierra la conexión después de usarla
+    await db.end();
+
+    // Llama al callback con el resultado
+    callback(null, resultado);
+  } catch (err) {
+    callback(err, null);
+  }
+}
+
+async function crearDocumentoYCertificado(documento, certificado, callback) {
+  try {
+    const db = await sql_connect(); // Establece una conexión a la base de datos
+
+    // Inserta el documento en la base de datos
+    console.log(documento);
+    console.log(certificado);
+    const { url_doc, estado } = documento;
+    const documentoQuery = 'INSERT INTO documento (url_doc, estado) VALUES (?, ?)';
+    const [documentoResult] = await db.promise().query(documentoQuery, [url_doc, estado]);
+
+    // Obtiene el ID del documento recién creado
+    const documento_id = documentoResult.insertId;
+
+    // Inserta el certificado en la base de datos con el ID del documento
+    const { nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_inicio, fecha_fin, fecha_creacion, estudiante_id } = certificado;
+    const certificadoQuery = 'INSERT INTO certificado (nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_inicio, fecha_fin, fecha_creacion, documento_id, estudiante_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const [certificadoResult] = await db.promise().query(certificadoQuery, [nombre_certificado, tipo, estado_certificado, codigo, creditos, horas, lugar, fecha_inicio, fecha_fin, fecha_creacion, documento_id, estudiante_id]);
+
+    // Cierra la conexión después de usarla
+    await db.end();
+
+    // Llama al callback con el resultado
+    callback(null, { documento: documentoResult, certificado: certificadoResult });
   } catch (err) {
     callback(err, null);
   }
@@ -22,7 +81,7 @@ async function obtenerCertificados(id, callback) {
       'certificado.id AS certificado_id, ' +
       'certificado.nombre_certificado, ' +
       'certificado.tipo AS certificado_tipo, ' +
-      'certificado.estado AS certificado_estado, ' +
+      'certificado.estado_certificado AS certificado_estado, ' +
       'certificado.codigo, ' +
       'certificado.creditos, ' +
       'certificado.horas, ' +
@@ -37,15 +96,11 @@ async function obtenerCertificados(id, callback) {
       'estudiante.usuario_id AS estudiante_usuario_id, ' +
       
       'documento.id AS documento_id, ' +
-      'documento.url_doc, ' +
-      
-      'nivel_academico.id AS nivel_academico_id, ' +
-      'nivel_academico.nivel ' +
-      
+      'documento.url_doc ' + // Eliminé la coma innecesaria al final de esta línea
+
       'FROM certificado ' +
       'JOIN estudiante ON certificado.estudiante_id = estudiante.id ' +
-      'JOIN documento ON certificado.documento_id = documento.id ' +
-      'JOIN nivel_academico ON certificado.nivel_academico_id = nivel_academico.id';
+      'JOIN documento ON certificado.documento_id = documento.id ';
 
     if (id) {
       query += ' WHERE certificado.id LIKE ?';
@@ -57,7 +112,7 @@ async function obtenerCertificados(id, callback) {
     if (id && results.length === 0) {
       callback(null, null);
     } else {
-      callback(null, id ? results : results);
+      callback(null, id ? results[0] : results);
     }
   } catch (err) {
     callback(err, null);
@@ -95,5 +150,7 @@ module.exports = {
   crearCertificado,
   obtenerCertificados,
   actualizarCertificado,
-  eliminarCertificado
+  eliminarCertificado,
+  crearDocumentoYCertificado,
+  actualizarDocumentoDesdeCertificado
 };

@@ -14,6 +14,9 @@ async function crearDocumento(documento, callback) {
   }
 }
 
+
+
+
 // Función para obtener todos los documentos
 async function obtenerTodos(callback) {
   try {
@@ -77,5 +80,6 @@ module.exports = {
   obtenerTodos,
   obtenerDocumento,
   actualizarDocumento,
-  eliminarDocumento
+  eliminarDocumento,
+  
 };

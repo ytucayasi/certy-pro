@@ -3,7 +3,9 @@ const {
   crearCertificado,
   obtenerCertificados,
   actualizarCertificado,
-  eliminarCertificado
+  eliminarCertificado,
+  crearDocumentoYCertificado,
+  actualizarDocumentoDesdeCertificado
 } = require('../repositories/certificadoRepository');
 
 const crearNuevoCertificado = (req, res) => {
@@ -15,6 +17,49 @@ const crearNuevoCertificado = (req, res) => {
       return;
     }
     res.status(201).json(result);
+  });
+};
+
+const actualizarDocumentoDesdeCertificadoController = (req, res) => {
+  const certificadoId = req.params.id; // Reemplaza con la forma en que obtienes el ID del certificado desde la solicitud
+  const nuevoDocumento = req.body.documento; // Ajusta según la estructura de tu solicitud
+  console.log(req.body);
+
+  actualizarDocumentoDesdeCertificado(certificadoId, nuevoDocumento, (err, resultadoDocumento) => {
+    if (err) {
+      console.error('Error al actualizar el documento desde el certificado:', err);
+      res.status(500).json({ message: 'Error al actualizar el documento desde el certificado' });
+      return;
+    }
+
+    // Envía la respuesta con el resultado de la actualización del documento
+    res.status(200).json({
+      documento: resultadoDocumento
+    });
+  });
+};
+
+
+const crearNuevoCertificadoMejorado = (req, res) => {
+  console.log(req.body);
+  const { documentoInfo, certificadoInfo } = req.body;
+  console.log(documentoInfo, certificadoInfo);
+  // Crear un nuevo documento y certificado
+  crearDocumentoYCertificado(documentoInfo, certificadoInfo, (err, result) => {
+    if (err) {
+      console.error('Error al crear un certificado y documento:', err);
+      res.status(500).json({ message: 'Error al crear un certificado y documento' });
+      return;
+    }
+
+    const { documento, certificado } = result;
+
+    // Puedes personalizar la respuesta según tus necesidades
+    res.status(201).json({
+      message: 'Certificado y documento creados exitosamente',
+      documento_id: documento.insertId,
+      certificado_id: certificado.insertId
+    });
   });
 };
 
@@ -105,5 +150,7 @@ module.exports = {
   crearNuevoCertificado,
   obtenerCertificadosControl,
   actualizarCertificadoPorId,
-  eliminarCertificadoPorId
+  eliminarCertificadoPorId,
+  crearNuevoCertificadoMejorado,
+  actualizarDocumentoDesdeCertificadoController
 };
